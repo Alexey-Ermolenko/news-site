@@ -114,18 +114,34 @@ class Category extends \yii\db\ActiveRecord
         $itemCount = count($arrItems[$parent_id]);
         for($i = 0; $i<$itemCount; $i++)
         {
-            $result[] = [
-                'label' => $arrItems[$parent_id][$i]['name']. ' <span class="badge badge-secondary">'.$arrItems[$parent_id][$i]['news_count'].'</span>',  //
-                'url' => Url::to([
-                    '/', 'NewsSearch' => [
+            if($arrItems[$parent_id][$i]['news_count'] > 0)
+            {
+                $label = $arrItems[$parent_id][$i]['name']. ' <span class="badge badge-secondary">'.$arrItems[$parent_id][$i]['news_count'].'</span>';
+                $url = Url::to([
+                    '/',
+                    'NewsSearch' => [
                         'cat_id'=> $arrItems[$parent_id][$i]['id']
                     ]
-                ]),
+                ]);
+            }
+            else
+            {
+                $label = null;
+                $url = null;
+            }
+
+
+            $result[] = [
+                'news_count' => $arrItems[$parent_id][$i]['news_count'],
+                'label' => $label,
+                'url' => $url,
                 'linkOptions'=> ['title'=>$arrItems[$parent_id][$i]['name']],
                 'items' => self::viewMenuItems($arrItems[$parent_id][$i]['id']),
                 'options' => ['class'=>$arrItems[$parent_id][$i]['class']],
             ];
         }
+
+
         return $result;
     }
 

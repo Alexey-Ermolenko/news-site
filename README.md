@@ -20,6 +20,7 @@ Mysql-8.0
 1) win + R (cmd)
 2) `cd D:\localhost\yii.local` - каталог сайта
 3) `git clone https://github.com/Alexey-Ermolenko/news-site.git`
+4) `composer install`
 4) залить дамп c тестовыми данными файл `yii_local.sql` имя бд yii_local
 
 
