@@ -1,9 +1,12 @@
 <?
 
 use app\components\UserHelperClass;
-
 use yii\helpers\Html;
+
+$this->title = 'Админка';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="admin-default-index">
     <h1>Админка</h1>
     <?= Html::a('1. Новости',["news/index"],['class' => 'btn btn-success'])?>

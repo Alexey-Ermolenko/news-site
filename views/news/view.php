@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="row">
         <div id="comments">
-            <h3>Комментарии новости</h3>
+            <h3>Комментарии</h3>
             <?= ListView::widget([
                 'dataProvider' => $commentsDataProvider,
                 'itemView' => '_comment_list',

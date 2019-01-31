@@ -57,6 +57,15 @@ class Category extends \yii\db\ActiveRecord
         return $this->hasMany(News::className(), ['cat_id' => 'id']);
     }
 
+    public function getParentName($model)
+    {
+        return Category::find()
+            ->select('c.id, c.name, cat.name as parent_name')
+            ->from('category c')
+            ->leftJoin('category cat', 'c.parent_id = cat.id')
+            ->asArray()
+            ->where('c.id = :id', [':id' => $model->id])->one()['parent_name'];
+    }
 
     /**
      * @return array

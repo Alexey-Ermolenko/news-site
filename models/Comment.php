@@ -2,7 +2,9 @@
 
 namespace app\models;
 
+use app\components\UserHelperClass;
 use Yii;
+use app\Models\News;
 
 /**
  * This is the model class for table "comment".
@@ -74,5 +76,15 @@ class Comment extends \yii\db\ActiveRecord
     public function getNews()
     {
         return $this->hasOne(News::className(), ['id' => 'news_id']);
+    }
+
+    public function getNewsName($model)
+    {
+        return News::find()
+            ->select('title as name')
+            ->from('news')
+            ->asArray()
+            ->where('id = :id', [':id' => $model->news_id])->one()['name'];
+
     }
 }

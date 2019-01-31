@@ -6,6 +6,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Comment */
 
 $this->title = 'Create Comment';
+$this->params['breadcrumbs'][] = ['label' => 'Админка', 'url' => ['/admin']];
 $this->params['breadcrumbs'][] = ['label' => 'Comments', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

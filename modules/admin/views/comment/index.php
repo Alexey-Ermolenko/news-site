@@ -3,12 +3,16 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\Comment;
+use app\models\News;
+use yii\helpers\ArrayHelper;
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CommentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Comments';
+$this->title = 'Комментарии';
+$this->params['breadcrumbs'][] = ['label' => 'Админка', 'url' => ['/admin']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="comment-index">
@@ -17,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Comment', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать Комментарий', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -27,7 +31,21 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'news_id',
+            //'news_id',
+            [
+                'attribute' => 'news_id',
+                'filter' => Html::activeDropDownList(
+                    $searchModel,
+                    'news_id',
+                    ArrayHelper::map(News::find()->all(), 'id', 'title'),
+                    ['class' => 'form-control']
+                ),
+                'value' => function($model) {
+                    $newsName = Comment::getNewsName($model);
+                    return $newsName;
+
+                }
+            ],
             // 'status',
             [
                 'attribute' => 'status',

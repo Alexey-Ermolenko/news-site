@@ -3,12 +3,15 @@
 namespace app\modules\admin\controllers;
 
 
+use app\components\UserHelperClass;
 use Yii;
 use app\models\Category;
 use app\models\CategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
+use Yii\helpers\ArrayHelper;
 
 /**
  * CategoryController implements the CRUD actions for Category model.
@@ -70,9 +73,10 @@ class CategoryController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
+        $parentCatItems = ArrayHelper::map(Category::find()->asArray()->all(), 'id', 'name');
 
         return $this->render('create', [
-            'model' => $model,
+            'model' => $model, 'parentCatItems' => $parentCatItems
         ]);
     }
 
@@ -90,9 +94,11 @@ class CategoryController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
+        $parentCatItems = ArrayHelper::map(Category::find()->asArray()->all(), 'id', 'name');
+
 
         return $this->render('update', [
-            'model' => $model,
+            'model' => $model, 'parentCatItems' => $parentCatItems
         ]);
     }
 

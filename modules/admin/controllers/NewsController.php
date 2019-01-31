@@ -5,10 +5,14 @@ use Yii;
 
 use app\models\News;
 use app\models\NewsSearch;
+use app\models\Category;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\Pagination;
+
+use app\components\UserHelperClass;
+use Yii\helpers\ArrayHelper;
 
 /**
  * NewsController implements the CRUD actions for News model.
@@ -79,12 +83,19 @@ class NewsController extends Controller
     {
         $model = new News();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()))
+        {
+            $model->create_date = date("Y-m-d H:i:s");
+            if($model->save())
+            {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
+        $categoryItems = ArrayHelper::map(Category::find()->asArray()->all(), 'id', 'name');
+
         return $this->render('create', [
-            'model' => $model,
+            'model' => $model, 'categoryItems' => $categoryItems
         ]);
     }
 
@@ -99,12 +110,15 @@ class NewsController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save())
+        {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $categoryItems = ArrayHelper::map(Category::find()->asArray()->all(), 'id', 'name');
+
         return $this->render('update', [
-            'model' => $model,
+            'model' => $model, 'categoryItems' => $categoryItems
         ]);
     }
 

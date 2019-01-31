@@ -98,7 +98,7 @@ class NewsController extends Controller
                 $CommentModel->status = Comment::STATUS_DRAFT;
                 if($CommentModel->save())
                 {
-                    Yii::$app->session->setFlash("comment_add-success", "Комментарий успешно добавлен");
+                    Yii::$app->session->setFlash("comment_add-success", "Комментарий успешно добавлен, он будет опубликован после модерации");
                     return $this->refresh();
                 }
 

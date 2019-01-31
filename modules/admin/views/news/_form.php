@@ -3,6 +3,10 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+use app\models\Category;
+
+use Yii\helpers\ArrayHelper;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\News */
 /* @var $form yii\widgets\ActiveForm */
@@ -12,11 +16,9 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'cat_id')->textInput() ?>
+    <?= $form->field($model, 'cat_id')->dropDownList($categoryItems, [])->label("Категория"); ?>
 
-    <?= $form->field($model, 'active')->textInput() ?>
-
-    <?= $form->field($model, 'create_date')->textInput() ?>
+    <?= $form->field($model, 'active')->dropDownList(['1' => 'Активная новость', '0' => 'Не активна'],['prompt'=>'Задать активность новости']);?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
